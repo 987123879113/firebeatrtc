@@ -1,6 +1,8 @@
 # firebeatrtc
 Code to unlock Firebeat (pop'n music) RTC recovery.
 
+Web version: https://987123879113.github.io/firebeatrtc/
+
 ## Usage
 ```
 usage: keygen.py [-h] (--verify VERIFY | --serial SERIAL) [--keycode KEYCODE] [--retries RETRIES]
