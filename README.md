@@ -12,3 +12,10 @@ optional arguments:
   --keycode KEYCODE  Key code
   --retries RETRIES  Retry count
 ```
+
+## Building Javascript
+Note: pscript is required to build the rtcpass.js file required for the webpage.
+
+```
+python3 -c "import pscript; pscript.script2js('rtcpass.py')"
+```

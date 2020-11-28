@@ -1,0 +1,99 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family:Arial, Helvetica, sans-serif;
+            background:#12232E;
+            max-width: 1000px;
+            padding:4% 4%;
+            margin: auto;
+        }
+
+        h1 {
+            font-size:48px;
+            color:#EEFBFB;
+            text-align:center;
+        }
+
+        input {
+            color:white;
+            width:100%;
+            border-radius:5px;
+            transition:all 0.3s;
+            box-sizing:border-box;
+        }
+
+        ::placeholder {
+            font-family:Arial, Helvetica, sans-serif;
+            color:#DBDBDB;
+            font-weight:500;
+        }
+
+        [type="text"] {
+            font-family:Consolas, monaco, monospace;
+            font-weight:500;
+            font-size:48px;
+            line-height:120px;
+
+            margin-bottom:15px;
+            outline:0;
+            background-color:#203647;
+            border:2px solid #4DA8DA;
+            padding:13px;
+        }
+
+        [type="submit"] {
+            font-weight:700;
+            font-size:36px;
+            line-height:120px;
+
+            margin-top:-4px;
+            background:#007CC7;
+            border:0;
+            cursor:pointer;
+        }
+
+        #password {
+            font-weight:bold;
+            font-size:56px;
+            text-align:center;
+            border:2px solid #203647;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="rtcpass.js"></script>
+    <script>
+        function generatePassword() {
+            var serial = document.getElementById('serial').value;
+            var keycode = document.getElementById('keycode').value;
+            var curDate = new Date();
+            var dateYear = ((curDate.getFullYear() % 100)).toString().padStart(2, '0');
+            var dateMonth = (curDate.getMonth() + 1).toString().padStart(2, '0');
+            var dateDay = curDate.getDate().toString().padStart(2, '0');
+            var date = dateYear + dateMonth + dateDay;
+
+            var seed = Math.floor(Math.random() * Math.floor(1024));
+            var password = encode_firebeat_recovery_password(serial, keycode, date, seed, true);
+            document.getElementById('password').value = password;
+        }
+    </script>
+
+    <h1>Firebeat RTC Recovery Password</h1>
+    <br>
+
+    <form id="passform" action="javascript:generatePassword();">
+        <input id="serial" type="text" placeholder="Serial/License" minlength="9" maxlength="9" required />
+        <input id="keycode" type="text" placeholder="Key Code" minlength="8" maxlength="8" required />
+        <input type="submit" value="GENERATE" />
+    </form>
+    <br>
+    <br>
+    <br>
+    <input id="password" type="text" placeholder="Password" onfocus="this.select();" readonly />
+</body>
+</html>
