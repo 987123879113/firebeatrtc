@@ -167,7 +167,7 @@ def decode_firebeat_recovery_password(input):
     }
 
 
-def encode_firebeat_recovery_password(serial, keycode, date, seed):
+def encode_firebeat_recovery_password(serial, keycode, date, seed, verify_password=False):
     def generate_key(serial, keycode, date):
         assert(len(serial) == 9)
         assert(len(keycode) == 8)
@@ -194,7 +194,6 @@ def encode_firebeat_recovery_password(serial, keycode, date, seed):
     seed = int(seed)
 
     k = generate_key(serial, keycode, date)
-    print(k)
     output_buffer = str_to_buffer(k)
 
     internal_sum = sum([
@@ -231,4 +230,12 @@ def encode_firebeat_recovery_password(serial, keycode, date, seed):
     ]
 
     parts_str = "".join(parts)
-    return "-".join([parts_str[i:i+5] for i in range(0, len(parts_str), 5)])
+    password = "-".join([parts_str[i:i+5] for i in range(0, len(parts_str), 5)])
+
+    if verify_password:
+        decoded_password = decode_firebeat_recovery_password(password)
+
+        if not decoded_password['is_valid']:
+            return "FAILED"
+
+    return password
